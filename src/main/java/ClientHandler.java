@@ -22,7 +22,6 @@ public class ClientHandler extends Thread {
                 System.out.println(message);
                 out.print("+PONG\r\n");
                 out.flush();
-                break;
             }
 
         }catch(IOException e) {
