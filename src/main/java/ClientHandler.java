@@ -20,8 +20,10 @@ public class ClientHandler extends Thread {
                 if (message == null) break;
 
                 System.out.println(message);
-                out.print("+PONG\r\n");
-                out.flush();
+                if(message.equals("PING")) {
+                    out.print("+PONG\r\n");
+                    out.flush();
+                }
             }
 
         }catch(IOException e) {
