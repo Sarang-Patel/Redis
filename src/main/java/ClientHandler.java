@@ -20,7 +20,9 @@ public class ClientHandler extends Thread {
                 if (message == null) break;
 
                 System.out.println(message);
-                out.println("+PONG\\r\\n");
+                out.print("+PONG\r\n");
+                out.flush();
+                break;
             }
 
         }catch(IOException e) {
