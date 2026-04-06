@@ -18,9 +18,9 @@ public class ClientHandler extends Thread {
             while(true) {
                 String message = in.readLine();
                 if (message == null) break;
-                
+
                 System.out.println(message);
-                out.println("PONG");
+                out.println("+PONG\\r\\n");
             }
 
         }catch(IOException e) {
