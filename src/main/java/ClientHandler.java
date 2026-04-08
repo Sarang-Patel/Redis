@@ -23,6 +23,9 @@ public class ClientHandler extends Thread {
                 if(message.equals("PING")) {
                     out.print("+PONG\r\n");
                     out.flush();
+                }else{
+                    out.print("-ERR\r\n");
+                    out.flush();
                 }
             }
 
