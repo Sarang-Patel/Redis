@@ -1,5 +1,6 @@
+package resp;
 public class Cursor {
-    int index;
+    public int index;
 
     public Cursor(){
         this.index = 0;

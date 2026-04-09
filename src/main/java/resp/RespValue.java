@@ -1,7 +1,8 @@
+package resp;
 import java.util.List;
 
 public class RespValue {
-    enum Type {INTEGER, ARRAY, STRING, NULL};
+    public enum Type {INTEGER, ARRAY, STRING, NULL};
 
     private Type type;
     private String stringValue;

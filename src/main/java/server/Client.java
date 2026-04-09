@@ -1,3 +1,4 @@
+package server;
 import java.io.*;
 import java.net.*;
 
@@ -33,7 +34,18 @@ public class Client {
                     System.out.print("> ");
                     message = reader.readLine();
                     
-                    out.println(message);
+                    String[] parts = message.split(" ");
+                    StringBuilder resp = new StringBuilder();
+
+                    resp.append("*").append(parts.length).append("\r\n");
+
+                    for (String part : parts) {
+                        resp.append("$").append(part.length()).append("\r\n");
+                        resp.append(part).append("\r\n");
+                    }
+
+                    out.print(resp.toString());
+                    out.flush();
 
                     String response = serverIn.readLine();
                     System.out.println(response);
