@@ -72,4 +72,14 @@ public class ParserTest {
             Parser.parse(command, cursor);
         });
     }
+
+    // @Test
+    // void testSimpleError() {
+    //     String command = "-Err\r\n"; // incomplete
+    //     Cursor cursor = new Cursor();
+
+    //     assertThrows(RuntimeException.class, () -> {
+    //         Parser.parse(command, cursor);
+    //     });
+    // }
 }

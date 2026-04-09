@@ -61,39 +61,52 @@ public class Parser {
 
                 return RespValue.ofString(sb.toString());
                 
-        }else {
-            //error - invalid symbol
+        }else if (command.charAt(cursor.index) == '+') {
+            cursor.index++;
+
+            StringBuilder sb = new StringBuilder();
+
+            while (cursor.index < command.length()
+                    && command.charAt(cursor.index) != '\r') {
+                sb.append(command.charAt(cursor.index));
+                cursor.index++;
+            }
+
+            if (cursor.index + 1 >= command.length()
+                    || command.charAt(cursor.index) != '\r'
+                    || command.charAt(cursor.index + 1) != '\n') {
+                throw new IllegalArgumentException("CRLF separator not found!");
+            }
+
+            cursor.index += 2;
+
+            return RespValue.ofString(sb.toString());
+        }else if (command.charAt(cursor.index) == '-') {
+            cursor.index++;
+
+            StringBuilder sb = new StringBuilder();
+
+            while (cursor.index < command.length()
+                    && command.charAt(cursor.index) != '\r') {
+                sb.append(command.charAt(cursor.index));
+                cursor.index++;
+            }
+
+            if (cursor.index + 1 >= command.length()
+                    || command.charAt(cursor.index) != '\r'
+                    || command.charAt(cursor.index + 1) != '\n') {
+                throw new IllegalArgumentException("CRLF separator not found!");
+            }
+
+            cursor.index += 2;
+
+            return RespValue.ofString("-" + sb.toString());
+
+        }
+        else {
             throw new IllegalArgumentException("invalid symbol: " + command.charAt(cursor.index));
         }
     }    
-
-    
-
-    // public static void main(String[] args) {
-    //     String command = "*2\r\n$4\r\nECHO\r\n$3\r\nhey\r\n$0\r\n\r\n";
-    //     Cursor cursor = new Cursor();
-    //     RespValue parsedCmd = parse(command, cursor);
-        
-        // for(RespValue r: parsedCmd.getArray()) {
-    //         if(r.getType() == RespValue.Type.NULL) {
-    //             System.out.print("NULL -> ");
-    //         }
-    //         else if(r.getType() == RespValue.Type.STRING) {
-    //             System.out.print(r.getString() + " -> ");
-    //         }else if(r.getType() == RespValue.Type.INTEGER) {
-    //             System.out.print(r.getInteger() + " -> ");
-
-    //         } else {
-    //             System.out.print(" [ ");
-                
-    //             for(RespValue t: r.getArray()) {
-    //                 System.out.print(t + " : ");
-    //             }
-
-    //             System.out.print(" ] ");
-    //         }
-    //     }
-    // } 
 }
 
 

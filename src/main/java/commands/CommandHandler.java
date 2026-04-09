@@ -9,19 +9,12 @@ public class CommandHandler {
         String cmd = parsedMessage.getArray().get(0).getString().toUpperCase();
         System.out.println(cmd);
 
-        Command command;
+        Command command = CommandRegistry.get(cmd);
 
-        switch (cmd) {
-            case "ECHO":
-                command = new Echo();
-                break;
-            case "PING":
-                command = new Ping();
-                break;
-            default:
-                out.print("-Invalid Message\r\n");
-                out.flush();
-                return;
+        if (command == null) {
+            out.print("-Invalid Command\r\n");
+            out.flush();
+            return;
         }
 
         command.execute(parsedMessage, out);
