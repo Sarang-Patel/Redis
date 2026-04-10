@@ -100,7 +100,7 @@ public class Parser {
 
             cursor.index += 2;
 
-            return RespValue.ofString("-" + sb.toString());
+            return RespValue.ofString(sb.toString());
 
         }
         else {

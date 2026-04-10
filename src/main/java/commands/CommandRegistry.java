@@ -10,7 +10,8 @@ public class CommandRegistry {
     static {
         commands.put("ECHO", new Echo());
         commands.put("PING", new Ping());
-        // commands.put("SET", new SetCommand());
+        commands.put("SET", new Set());
+        commands.put("GET", new Get());
     }
 
     public static Command get(String name) {

@@ -1,6 +1,8 @@
 package commands;
 
 import java.io.PrintWriter;
+
+import resp.RespFormatter;
 import resp.RespValue;
 
 public class CommandHandler {
@@ -12,7 +14,7 @@ public class CommandHandler {
         Command command = CommandRegistry.get(cmd);
 
         if (command == null) {
-            out.print("-Invalid Command\r\n");
+            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "Invalid Command"));
             out.flush();
             return;
         }
