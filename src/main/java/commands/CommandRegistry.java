@@ -16,6 +16,7 @@ public class CommandRegistry {
         commands.put("LRANGE", new Lrange());
         commands.put("LPUSH", new Lpush());
         commands.put("LLEN", new Llen());
+        commands.put("LPOP", new Lpop());
     }
 
     public static Command get(String name) {

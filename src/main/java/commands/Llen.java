@@ -1,7 +1,6 @@
 package commands;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
 import resp.RespFormatter;
 import resp.RespValue;
@@ -36,7 +35,7 @@ public class Llen implements Command {
 
         out.print(RespFormatter.format(RespFormatter.Type.INTEGER, existingList.getList().size()));
         out.flush();
-        
+
     }
 
 }
