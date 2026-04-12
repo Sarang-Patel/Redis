@@ -24,7 +24,7 @@ public class Rpush implements Command {
 
         Data existing = InMemoryStore.store.get(key);
         List<String> list;
-
+        long expiryTime = -1;
         if (existing != null) {
 
             if (existing.getType() != Data.Type.LIST) {
@@ -35,6 +35,7 @@ public class Rpush implements Command {
             }
 
             list = existing.getList();
+            expiryTime = existing.getExpiryTime();
 
         } else {
             list = new ArrayList<>();
@@ -44,7 +45,7 @@ public class Rpush implements Command {
             list.add(input.getArray().get(i).getString());
         }
 
-        Data valueObj = Data.ofList(list, -1);
+        Data valueObj = Data.ofList(list, expiryTime);
         InMemoryStore.store.put(key, valueObj);
 
         out.print(RespFormatter.format(RespFormatter.Type.INTEGER, list.size()));
