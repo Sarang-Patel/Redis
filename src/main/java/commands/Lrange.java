@@ -21,9 +21,6 @@ public class Lrange implements Command {
         String key = input.getArray().get(1).getString();
         int start = Integer.parseInt(input.getArray().get(2).getString());
         int stop = Integer.parseInt(input.getArray().get(3).getString());
-        
-        System.out.println(start);
-        System.out.println(stop);
 
         Data existingList = InMemoryStore.store.get(key);
 
