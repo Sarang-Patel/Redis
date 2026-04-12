@@ -25,7 +25,6 @@ public class Lpop implements Command {
 
         if(inSize == 3) toRemove = Integer.parseInt(input.getArray().get(2).getString());
 
-        if(toRemove > inSize) toRemove = inSize;
 
         String key = input.getArray().get(1).getString();
 
@@ -42,6 +41,9 @@ public class Lpop implements Command {
             out.flush();
             return;
         }
+
+        if(toRemove > existingList.getList().size()) toRemove = existingList.getList().size();
+
 
         if(toRemove == 1) {
             out.print(RespFormatter.format(RespFormatter.Type.BULK_STRING, existingList.getList().remove(0)));
