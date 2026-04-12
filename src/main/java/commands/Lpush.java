@@ -13,7 +13,7 @@ public class Lpush implements Command{
     @Override
     public void execute(RespValue input, PrintWriter out) {
         if(input.getArray().size() < 3) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'set'"));
+            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'lpush'"));
             out.flush();
             return;
         }
@@ -23,9 +23,8 @@ public class Lpush implements Command{
         Data existingList = InMemoryStore.store.get(key);
 
         if(existingList == null) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR value doesn't exist"));
-            out.flush();
-            return;
+            existingList = Data.ofList(new ArrayList<>(), -1);
+            InMemoryStore.store.put(key, existingList);
         }
 
         if(existingList.getType() != Data.Type.LIST) {
@@ -36,7 +35,7 @@ public class Lpush implements Command{
 
 
         for(int i = 2; i < input.getArray().size(); i++) {
-            existingList.getList().addFirst(input.getArray().get(i).getString());
+            existingList.getList().add(0, input.getArray().get(i).getString());
         }
 
         out.print(RespFormatter.format(RespFormatter.Type.INTEGER, existingList.getList().size()));
