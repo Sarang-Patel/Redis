@@ -37,7 +37,41 @@ public class Parser {
                 }
                 return RespValue.ofArray(children);
                 
-        }else if(command.charAt(cursor.index) == '$') {
+        }else if (command.charAt(cursor.index) == ':') {
+            cursor.index++;
+
+            StringBuilder sb = new StringBuilder();
+
+            while (cursor.index < command.length()
+                    && command.charAt(cursor.index) != '\r') {
+
+                char ch = command.charAt(cursor.index);
+
+                if (!Character.isDigit(ch) && ch != '-') {
+                    throw new RuntimeException("Invalid integer format!");
+                }
+
+                sb.append(ch);
+                cursor.index++;
+            }
+
+            if (cursor.index + 1 >= command.length()
+                    || command.charAt(cursor.index) != '\r'
+                    || command.charAt(cursor.index + 1) != '\n') {
+                throw new IllegalArgumentException("CRLF separator not found!");
+            }
+
+            cursor.index += 2;
+
+            if (sb.length() == 0) {
+                throw new RuntimeException("Empty integer value!");
+            }
+
+            int value = Integer.parseInt(sb.toString());
+
+            return RespValue.ofInteger(value);
+        }
+        else if(command.charAt(cursor.index) == '$') {
                 cursor.index++;
                 int noOfChars = getLen(command, cursor);
                 

@@ -55,7 +55,7 @@ public class Set implements Command {
             }
         }
 
-        Data valueObj = new Data(val, expiryTime);
+        Data valueObj = Data.ofString(val, expiryTime);
         InMemoryStore.store.put(key, valueObj);
 
         out.print(RespFormatter.format(RespFormatter.Type.SIMPLE_STRING, "OK"));

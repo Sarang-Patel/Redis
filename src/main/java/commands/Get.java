@@ -16,7 +16,7 @@ public class Get implements Command {
         if(data != null) {
             
             if (data.getExpiryTime() == -1 || System.currentTimeMillis() <= data.getExpiryTime()) {
-                out.print(RespFormatter.format(RespFormatter.Type.BULK_STRING, data.getData()));
+                out.print(RespFormatter.format(RespFormatter.Type.BULK_STRING, data.getString()));
                 out.flush();
                 return;
             }

@@ -12,6 +12,7 @@ public class CommandRegistry {
         commands.put("PING", new Ping());
         commands.put("SET", new Set());
         commands.put("GET", new Get());
+        commands.put("RPUSH", new Rpush());
     }
 
     public static Command get(String name) {
