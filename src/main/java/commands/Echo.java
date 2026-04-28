@@ -8,9 +8,8 @@ import resp.RespValue;
 public class Echo implements Command {
 
     @Override
-    public void execute(RespValue input, PrintWriter out) {
+    public String execute(RespValue input) {
         String msg = input.getArray().get(1).getString();
-        out.print(RespFormatter.format(RespFormatter.Type.BULK_STRING, msg));
-        out.flush();
+        return RespFormatter.format(RespFormatter.Type.BULK_STRING, msg);
     }
 }

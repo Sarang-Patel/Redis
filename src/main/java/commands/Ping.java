@@ -7,8 +7,7 @@ import resp.RespValue;
 
 public class Ping implements Command {
     @Override
-    public void execute(RespValue input, PrintWriter out) {
-        out.print(RespFormatter.format(RespFormatter.Type.SIMPLE_STRING, "PONG"));
-        out.flush();
+    public String execute(RespValue input) {
+        return RespFormatter.format(RespFormatter.Type.SIMPLE_STRING, "PONG");
     }
 }

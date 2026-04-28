@@ -11,11 +11,11 @@ import storage.InMemoryStore;
 public class Lpush implements Command{
 
     @Override
-    public void execute(RespValue input, PrintWriter out) {
+    public String execute(RespValue input) {
         if(input.getArray().size() < 3) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'lpush'"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'lpush'"));
+            
+            
         }
 
         String key = input.getArray().get(1).getString();
@@ -28,9 +28,9 @@ public class Lpush implements Command{
         }
 
         if(existingList.getType() != Data.Type.LIST) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "WRONGTYPE Operation against a key holding the wrong kind of value"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "WRONGTYPE Operation against a key holding the wrong kind of value"));
+            
+            
         }
 
 
@@ -38,8 +38,7 @@ public class Lpush implements Command{
             existingList.getList().add(0, input.getArray().get(i).getString());
         }
 
-        out.print(RespFormatter.format(RespFormatter.Type.INTEGER, existingList.getList().size()));
-        out.flush();
+        return RespFormatter.format(RespFormatter.Type.INTEGER, existingList.getList().size());
     }
 
 }

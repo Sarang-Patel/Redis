@@ -5,5 +5,5 @@ import java.io.PrintWriter;
 import resp.RespValue;
 
 public interface Command {
-    void execute(RespValue input, PrintWriter out);
+    String execute(RespValue input);
 }

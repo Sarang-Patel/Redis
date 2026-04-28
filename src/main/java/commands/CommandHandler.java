@@ -7,18 +7,16 @@ import resp.RespValue;
 
 public class CommandHandler {
 
-    public void handle(RespValue parsedMessage, PrintWriter out) {
+    public static String handle(RespValue parsedMessage) {
         String cmd = parsedMessage.getArray().get(0).getString().toUpperCase();
         System.out.println(cmd);
 
         Command command = CommandRegistry.get(cmd);
 
         if (command == null) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "Invalid Command"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "Invalid Command"));            
         }
 
-        command.execute(parsedMessage, out);
+        return command.execute(parsedMessage);
     }
 }

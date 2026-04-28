@@ -12,13 +12,13 @@ import storage.InMemoryStore;
 public class Lpop implements Command {
 
 	@Override
-	public void execute(RespValue input, PrintWriter out) {
+	public String execute(RespValue input) {
         int inSize = input.getArray().size();
 
 		if(inSize < 2 || inSize > 3 ) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'lpush'"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'lpush'"));
+            
+            
         }
 
         int toRemove = 1;
@@ -31,31 +31,29 @@ public class Lpop implements Command {
         Data existingList = InMemoryStore.store.get(key);
 
         if(existingList == null || existingList.getType() == Data.Type.LIST && existingList.getList().size() == 0) {
-            out.print(RespFormatter.format(RespFormatter.Type.NULL_BULK_STRING, null));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.NULL_BULK_STRING, null));
+            
+            
         }
 
          if(existingList.getType() != Data.Type.LIST) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "WRONGTYPE Operation against a key holding the wrong kind of value"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "WRONGTYPE Operation against a key holding the wrong kind of value"));
+            
         }
 
         if(toRemove > existingList.getList().size()) toRemove = existingList.getList().size();
 
 
         if(toRemove == 1) {
-            out.print(RespFormatter.format(RespFormatter.Type.BULK_STRING, existingList.getList().remove(0)));
+            return (RespFormatter.format(RespFormatter.Type.BULK_STRING, existingList.getList().remove(0)));
         }else {
             List<String> res = new ArrayList<>();
             for(int i = 0; i < toRemove; i++) {
                 res.add(existingList.getList().remove(0));
             }
-            out.print(RespFormatter.format(RespFormatter.Type.ARRAY, res));
+            return (RespFormatter.format(RespFormatter.Type.ARRAY, res));
         }
 
-        out.flush();
 
 	}
 

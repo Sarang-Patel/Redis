@@ -10,22 +10,22 @@ import storage.InMemoryStore;
 public class Get implements Command {
 
     @Override
-    public void execute(RespValue input, PrintWriter out) {
+    public String execute(RespValue input) {
         Data data = InMemoryStore.store.get(input.getArray().get(1).getString());
         
         if(data != null) {
             
             if (data.getExpiryTime() == -1 || System.currentTimeMillis() <= data.getExpiryTime()) {
-                out.print(RespFormatter.format(RespFormatter.Type.BULK_STRING, data.getString()));
-                out.flush();
-                return;
+                return (RespFormatter.format(RespFormatter.Type.BULK_STRING, data.getString()));
+                
+                
             }
             InMemoryStore.store.remove(input.getArray().get(1).getString());
             
         }
         
-        out.print(RespFormatter.format(RespFormatter.Type.NULL_BULK_STRING, null));
-        out.flush();
+        return (RespFormatter.format(RespFormatter.Type.NULL_BULK_STRING, null));
+        
         
     }
     

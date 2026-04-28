@@ -10,11 +10,11 @@ import storage.InMemoryStore;
 public class Llen implements Command {
 
     @Override
-    public void execute(RespValue input, PrintWriter out) {
+    public String execute(RespValue input) {
         if(input.getArray().size() != 2) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'lpush'"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'lpush'"));
+            
+            
         }
 
         String key = input.getArray().get(1).getString();
@@ -22,19 +22,19 @@ public class Llen implements Command {
         Data existingList = InMemoryStore.store.get(key);
 
         if(existingList == null) {
-            out.print(RespFormatter.format(RespFormatter.Type.INTEGER, 0));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.INTEGER, 0));
+            
+            
         }
 
         if(existingList.getType() != Data.Type.LIST) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "WRONGTYPE Operation against a key holding the wrong kind of value"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "WRONGTYPE Operation against a key holding the wrong kind of value"));
+            
+            
         }
 
-        out.print(RespFormatter.format(RespFormatter.Type.INTEGER, existingList.getList().size()));
-        out.flush();
+        return (RespFormatter.format(RespFormatter.Type.INTEGER, existingList.getList().size()));
+        
 
     }
 

@@ -40,7 +40,7 @@ public class ClientHandler extends Thread {
 
                         if(parsedMessage.getType() != RespValue.Type.ARRAY || parsedMessage.getArray().size() == 0) throw new RuntimeException("Message parsing error!");
                         
-                        handler.handle(parsedMessage, out);
+                        System.out.println(handler.handle(parsedMessage));
 
                         buffer.delete(0, consumed);
                     } catch (Exception e) {

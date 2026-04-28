@@ -10,12 +10,12 @@ import storage.Data;
 public class Set implements Command {
 
     @Override
-    public void execute(RespValue input, PrintWriter out) {
+    public String execute(RespValue input) {
 
         if (input.getArray().size() < 3) {
-            out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'set'"));
-            out.flush();
-            return;
+            return (RespFormatter.format(RespFormatter.Type.ERROR, "ERR wrong number of arguments for 'set'"));
+            
+            
         }
 
         String key = input.getArray().get(1).getString();
@@ -26,9 +26,9 @@ public class Set implements Command {
         if (input.getArray().size() > 3) {
 
             if (input.getArray().size() < 5) {
-                out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR syntax error"));
-                out.flush();
-                return;
+                return (RespFormatter.format(RespFormatter.Type.ERROR, "ERR syntax error"));
+                
+                
             }
 
             String type = input.getArray().get(3).getString().toUpperCase();
@@ -39,9 +39,9 @@ public class Set implements Command {
             try {
                 time = Long.parseLong(timeStr);
             } catch (NumberFormatException e) {
-                out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR invalid expire time"));
-                out.flush();
-                return;
+                return (RespFormatter.format(RespFormatter.Type.ERROR, "ERR invalid expire time"));
+                
+                
             }
 
             if (type.equals("EX")) {
@@ -49,16 +49,15 @@ public class Set implements Command {
             } else if (type.equals("PX")) {
                 expiryTime = System.currentTimeMillis() + time;
             } else {
-                out.print(RespFormatter.format(RespFormatter.Type.ERROR, "ERR invalid option"));
-                out.flush();
-                return;
+                return (RespFormatter.format(RespFormatter.Type.ERROR, "ERR invalid option"));
+                
+                
             }
         }
 
         Data valueObj = Data.ofString(val, expiryTime);
         InMemoryStore.store.put(key, valueObj);
 
-        out.print(RespFormatter.format(RespFormatter.Type.SIMPLE_STRING, "OK"));
-        out.flush();
+        return RespFormatter.format(RespFormatter.Type.SIMPLE_STRING, "OK");
     }
 }
